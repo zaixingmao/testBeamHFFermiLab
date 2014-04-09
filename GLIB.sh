@@ -1,0 +1,11 @@
+echo 'CLOCK'
+sleep 1
+echo 'CLKIN'
+sleep 1
+echo '0'
+sleep 1
+echo 'STATUS'
+sleep 1
+echo 'QUIT'
+sleep 1
+echo 'EXIT'
