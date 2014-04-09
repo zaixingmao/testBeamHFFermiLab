@@ -13,46 +13,28 @@ import subprocess as subprocess
 # 
 # 
 # #source stuff!
-# os.system('source ~daqowner/daq.11.11.4/etc/env.csh')
-# os.system('source /home/hcalpro/seema/TTTSoftware/environ.csh')
-# os.system('source ~hcalpro/sckao/11_11_4/hcal/hcalUHTR/source.csh')
-
-
+subprocess.check_call(['/bin/csh', '-c', 'source ~daqowner/daq.11.11.4/etc/env.csh'])
+subprocess.check_call(['/bin/csh', '-c', 'source /home/hcalpro/seema/TTTSoftware/environ.csh'])
+subprocess.check_call(['/bin/csh', '-c', 'source ~hcalpro/sckao/11_11_4/hcal/hcalUHTR/source.csh'])
 
 #configure TTT to take external clock
-os.system('python ~hcalpro/seema/TTTSoftware/src/TTTtool.py')
-# python ~hcalpro/seema/TTTSoftware/src/TTTtool.py
-# ws 0x2 0x4
-# q
-# 
+os.system('externalClockTTT.sh | python ~hcalpro/seema/TTTSoftware/src/TTTtool.py')
+ 
 # #make AMC13 distribute the clock
-# AMC13Tool.exe -n 11
-# i 3 7
-# #3 is uHTR, 7 is GLIB
-# st #for log
-# q
-# 
-# #configure ngCCM to take external clock
-# cd ~/GLIBtool_UVA/
+am13_command = "AMC13Tool.exe -u -n 11 -x AMC13Com.txt > log.txt" 
+os.system(am13_command)
+
+ 
+#configure ngCCM to take external clock
+#os.system('cd ~/GLIBtool_UVA/')
 # ./GLIBtool
-# [Enter]
-# CLOCK
-# CLKIN
-# 0
-# STATUS #for log
-# QUIT
-# EXIT
-# [Enter]
+os.system('GLIB.sh | ./../GLIBtool_UVA/GLIBtool > log.txt')
 # cd -
-# 
-# #make uHTR run correct clock
-# bin/linux/x86_64_slc6/uHTRtool.exe 192.168.114.16
-# [Enter]
-# CLOCK
-# SETUP
-# 2
-# RATES #for log (320 MHz on front!)
-# QUIT
+
+#make uHTR run correct clock
+uHTR_command =  "bin/linux/x86_64_slc6/uHTRtool.exe -u 192.168.114.16 -s init.uhtr > log.txt"(htr_tool,i)
+os.system(daq_check_command)
+
 # 
 # #init links--maybe better to put in another script...
 # LINK
@@ -61,5 +43,4 @@ os.system('python ~hcalpro/seema/TTTSoftware/src/TTTtool.py')
 # 5
 # STATUS #for log
 # 
-# os.system(daq_check_command)
-#             daq_check_command =  "%s -u %s -s %s/checkDAQ.uhtr > %s/daqcheck.txt" % (htr_tool,i, script_dir, tmpDir)
+
