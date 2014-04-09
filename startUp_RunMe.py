@@ -22,11 +22,10 @@ os.system(am13_command)
 #  
 # #configure ngCCM to take external clock
 os.chdir('~/GLIBtool_UVA/')
-# # ./GLIBtool
 currentDir = os.getcwd()
 os.system('%s/GLIB.sh | ./GLIBtool > log.txt' %currentDir)
-# # cd -
-# 
+os.chir(currentDir)
+ 
 #make uHTR run correct clock
 uHTR_command = 'bin/linux/x86_64_slc6/uHTRtool.exe 192.168.114.16 -s init.uhtr > log.txt'
 os.system(uHTR_command)
